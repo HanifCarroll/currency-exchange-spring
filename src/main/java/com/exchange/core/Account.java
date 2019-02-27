@@ -6,6 +6,7 @@ import java.util.HashSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Account {
 	private String dateOFBirth;
 	@Column(name="RESIDENCE")
 	private String countryOfResidence;
-	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Collection<MoneyTransaction> transactions = new HashSet<>();
 	
 	
@@ -105,7 +106,7 @@ public class Account {
 	public String toString() {
 		return "Account [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", contactEmail="
 				+ contactEmail + ", payPalEmail=" + payPalEmail + ", dateOFBirth=" + dateOFBirth
-				+ ", countryOfResidence=" + countryOfResidence + ", transactions=" + transactions + "]";
+				+ ", countryOfResidence=" + countryOfResidence + "]";
 	}
 	
 	
