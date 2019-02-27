@@ -1,17 +1,22 @@
 package com.exchange.core;
 
+import java.util.Collection;
+import java.util.HashSet;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ACCOUNT")
 public class Account {
 
-	@Id
+	@Id  
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ACCOUNTID")
 	private long id;
@@ -27,8 +32,18 @@ public class Account {
 	private String dateOFBirth;
 	@Column(name="RESIDENCE")
 	private String countryOfResidence;
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	private Collection<MoneyTransaction> transactions = new HashSet<>();
 	
 	
+	public Collection<MoneyTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Collection<MoneyTransaction> transactions) {
+		this.transactions = transactions;
+	}
+
 	public Account() {
 		super();
 	}
@@ -84,6 +99,13 @@ public class Account {
 	}
 	public void setCountryOfResidence(String countryOfResidence) {
 		this.countryOfResidence = countryOfResidence;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", contactEmail="
+				+ contactEmail + ", payPalEmail=" + payPalEmail + ", dateOFBirth=" + dateOFBirth
+				+ ", countryOfResidence=" + countryOfResidence + ", transactions=" + transactions + "]";
 	}
 	
 	

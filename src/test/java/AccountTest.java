@@ -18,10 +18,11 @@ public class AccountTest {
 	@Autowired
 	private AccountService accountService;
 	
-	//@Test
+	@Test
 	public void findById1LShouldReturnFredFlinstone() {
 		Account account = accountService.findById(1L);
 		System.out.println(account.getFirstName() + account.getLastName());
+		System.out.println(account.getTransactions());
 	}
 	
 	//@Test
@@ -34,7 +35,7 @@ public class AccountTest {
 		System.out.println(newSize);
 	}
 	
-	@Test
+	//@Test
 	public void getAllAccountsShouldReturnAllAccounts() {
 		Collection<Account> accounts = accountService.findAll();
 		
