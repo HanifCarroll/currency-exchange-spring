@@ -11,6 +11,7 @@ import com.exchange.ExchangeApplication;
 import com.exchange.core.Account;
 import com.exchange.core.MoneyTransaction;
 import com.exchange.service.AccountService;
+import com.exchange.service.MoneyTransactionService;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT, classes=ExchangeApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,10 +19,11 @@ public class AccountTest {
 	
 	@Autowired
 	private AccountService accountService;
+
 	
 	//@Test
 	public void findById1LShouldReturnFredFlinstone() {
-		Account account = accountService.findAccountById(1L);
+		Account account = accountService.findById(1L);
 		System.out.println(account.getFirstName() + account.getLastName());
 		System.out.println(account.getTransactions());
 	}
@@ -43,11 +45,6 @@ public class AccountTest {
 		accounts.forEach(System.out::println);
 	}
 	
-	@Test
-	public void moneyTransaction1LShouldBelongToFred() {
-		MoneyTransaction transaction = accountService.findTransactionById(1L);
-		
-		System.out.println(transaction.getAccount());
-	}
+
 	
 }

@@ -36,14 +36,6 @@ public class Account {
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Collection<MoneyTransaction> transactions = new HashSet<>();
 	
-	
-	public Collection<MoneyTransaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(Collection<MoneyTransaction> transactions) {
-		this.transactions = transactions;
-	}
 
 	public Account() {
 		super();
@@ -100,6 +92,21 @@ public class Account {
 	}
 	public void setCountryOfResidence(String countryOfResidence) {
 		this.countryOfResidence = countryOfResidence;
+	}
+	
+	public Collection<MoneyTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Collection<MoneyTransaction> transactions) {
+		this.transactions = transactions;
+	}
+	
+	public void addTransaction(MoneyTransaction transaction) {
+		if (!this.transactions.contains(transaction)) {
+			transaction.setAccount(this);
+			this.transactions.add(transaction);			
+		}
 	}
 
 	@Override

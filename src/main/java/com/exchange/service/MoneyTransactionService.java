@@ -1,6 +1,6 @@
 package com.exchange.service;
 
-import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -11,40 +11,27 @@ import org.springframework.stereotype.Service;
 import com.exchange.controllers.to.TransactionTO;
 import com.exchange.core.Account;
 import com.exchange.core.MoneyTransaction;
-import com.exchange.dao.AccountRepository;
 import com.exchange.dao.MoneyTransactionRepository;
 
 @Service
-public class AccountService {
-	
-	@Autowired
-	private AccountRepository accountRepository;
+public class MoneyTransactionService {
+
 	@Autowired
 	private MoneyTransactionRepository moneyTransactionRepository;
 	@Autowired
+	private AccountService accountService;
+	@Autowired
 	private ExchangeRateService exchangeService;
 	
-	public Account findById(Long id) {
-		return accountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-	}
-	
-	public Iterable<Account> findAllIterable() {
-		return accountRepository.findAll();
-	}
-	
-	public Collection<Account> findAll() {
-		return (Collection<Account>) accountRepository.findAll();
-	}
-	
-	public void save(Account account) {
-		accountRepository.save(account);
+	public MoneyTransaction findById(Long id) {
+		return moneyTransactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 	}
 	
 	@Transactional
-	public void addTransactionToAccount(TransactionTO to) {
-		Account account = accountRepository.findById(to.getAccountId()).orElseThrow(EntityNotFoundException::new);
-		
+	public void addTransaction(TransactionTO to) {
 		MoneyTransaction transaction = new MoneyTransaction();
+
+		Account account = accountService.findById(to.getAccountId());
 		double rate = exchangeService.getExchangeRate(to.getCurrencyFrom(), to.getCurrencyTo());
 		double amountTo = to.getAmountFrom() * rate;
 		
@@ -54,8 +41,8 @@ public class AccountService {
 		transaction.setCurrencyFrom(to.getCurrencyFrom());
 		transaction.setCurrencyTo(to.getCurrencyTo());
 		transaction.setDate("2/28/2019");
-		
-		account.addTransaction(transaction);
+
+		moneyTransactionRepository.save(transaction);
 	}
 	
 }

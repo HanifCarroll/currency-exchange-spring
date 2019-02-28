@@ -3,7 +3,7 @@ package com.exchange.controllers.to;
 public class ExchangeRateTO {
  
 	private String currencyTo;
-	private double rate = 0.80;
+	private double rate;
 	private String year;
 	public double getRate() {
 		return rate;

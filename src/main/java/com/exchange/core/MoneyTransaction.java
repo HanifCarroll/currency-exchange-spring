@@ -31,7 +31,37 @@ public class MoneyTransaction {
 	@ManyToOne
 	@JoinColumn(name="ACCOUNTID")
     private Account account;
+	
     
+	public MoneyTransaction() {
+		super();
+	}
+	
+	public MoneyTransaction(String currencyFrom, String currencyTo, double rate, double amountFrom, double amountTo,
+			String date) {
+		super();
+		this.currencyFrom = currencyFrom;
+		this.currencyTo = currencyTo;
+		this.rate = rate;
+		this.amountFrom = amountFrom;
+		this.amountTo = amountTo;
+		this.date = date;
+	}
+	
+	
+
+	public MoneyTransaction(String currencyFrom, String currencyTo, double rate, double amountFrom, double amountTo,
+			String date, Account account) {
+		super();
+		this.currencyFrom = currencyFrom;
+		this.currencyTo = currencyTo;
+		this.rate = rate;
+		this.amountFrom = amountFrom;
+		this.amountTo = amountTo;
+		this.date = date;
+		this.account = account;
+	}
+
 	public long getId() {
 		return id;
 	}
