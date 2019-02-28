@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exchange.controllers.to.AccountTO;
 import com.exchange.controllers.to.TransactionTO;
 import com.exchange.core.Account;
 import com.exchange.core.MoneyTransaction;
@@ -36,7 +37,16 @@ public class AccountService {
 		return (Collection<Account>) accountRepository.findAll();
 	}
 	
-	public void save(Account account) {
+	public void save(AccountTO to) {
+		Account account = new Account();
+		
+		account.setFirstName(to.getFirstName());
+		account.setLastName(to.getLastName());
+		account.setContactEmail(to.getContactEmail());
+		account.setPayPalEmail(to.getPayPalEmail());
+		account.setDateOFBirth(to.getDateOFBirth());
+		account.setCountryOfResidence(to.getCountryOfResidence());
+		
 		accountRepository.save(account);
 	}
 	
@@ -45,7 +55,7 @@ public class AccountService {
 		Account account = accountRepository.findById(to.getAccountId()).orElseThrow(EntityNotFoundException::new);
 		
 		MoneyTransaction transaction = new MoneyTransaction();
-		double rate = exchangeService.getExchangeRate(to.getCurrencyFrom(), to.getCurrencyTo());
+		double rate = exchangeService.getCurrentExchangeRate(to.getCurrencyFrom(), to.getCurrencyTo());
 		double amountTo = to.getAmountFrom() * rate;
 		
 		transaction.setAccount(account);

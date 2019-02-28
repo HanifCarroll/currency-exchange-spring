@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name="MONEYTRANSACTION")
 public class MoneyTransaction {
@@ -30,6 +32,7 @@ public class MoneyTransaction {
     private String date;
 	@ManyToOne
 	@JoinColumn(name="ACCOUNTID")
+	@JsonBackReference
     private Account account;
 	
     

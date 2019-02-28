@@ -32,7 +32,7 @@ public class MoneyTransactionService {
 		MoneyTransaction transaction = new MoneyTransaction();
 
 		Account account = accountService.findById(to.getAccountId());
-		double rate = exchangeService.getExchangeRate(to.getCurrencyFrom(), to.getCurrencyTo());
+		double rate = exchangeService.getCurrentExchangeRate(to.getCurrencyFrom(), to.getCurrencyTo());
 		double amountTo = to.getAmountFrom() * rate;
 		
 		transaction.setAccount(account);

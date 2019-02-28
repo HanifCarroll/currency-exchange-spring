@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="ACCOUNT")
 public class Account {
@@ -33,6 +35,7 @@ public class Account {
 	private String dateOFBirth;
 	@Column(name="RESIDENCE")
 	private String countryOfResidence;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private Collection<MoneyTransaction> transactions = new HashSet<>();
 	
