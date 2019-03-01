@@ -1,6 +1,5 @@
 import java.util.Collection;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,10 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.exchange.ExchangeApplication;
+import com.exchange.controllers.to.AccountTO;
 import com.exchange.core.Account;
-import com.exchange.core.MoneyTransaction;
 import com.exchange.service.AccountService;
-import com.exchange.service.MoneyTransactionService;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT, classes=ExchangeApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,7 +28,13 @@ public class AccountTest {
 	
 	//@Test
 	public void saveShouldAddNewAccount() {
-		Account newAccount = new Account("Hanif", "Carroll", "Test@Test.com", "Test@Paypal.com", "5/17/91", "USA");
+		AccountTO newAccount = new AccountTO();
+		newAccount.setFirstName("Hanif");
+		newAccount.setLastName("Carroll");
+		newAccount.setContactEmail("Test@Test.com");
+		newAccount.setPayPalEmail("Test@Paypal.com");
+		newAccount.setCountryOfResidence("USA");
+		newAccount.setDateOFBirth("5/17/91");
 		int oldSize = accountService.findAll().size();
 		System.out.println(oldSize);
 		accountService.save(newAccount);

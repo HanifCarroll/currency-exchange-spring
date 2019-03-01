@@ -41,7 +41,7 @@ public class ExchangeRateTest {
 
 	@Test
 	public void testHistoricalRates() {
-		Map<String, Map<String, Double>> map = exchangeService.getHistorialRates("USD");
+		Map<String, Map<String, Double>> map = exchangeService.getHistoricalRates("USD");
 		assertThat(map.entrySet().size(), equalTo(3));
 		map.entrySet().stream().forEach(e-> {
 			System.out.println(e.getKey());

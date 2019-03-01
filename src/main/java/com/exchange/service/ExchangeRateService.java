@@ -35,20 +35,21 @@ public class ExchangeRateService {
 		return rates;
 	}
 	
-	public ExchangeRate addExchangeRate(String from, String to, double rate, String year) {
+	public ExchangeRate addExchangeRate(String currencyFrom, ExchangeRateTO to) {
 		ExchangeRate exchangeRate = new ExchangeRate();
+		LocalDateTime dt = LocalDateTime.now().withYear(Integer.parseInt(to.getYear()));
 		
-		exchangeRate.setCurrencyFrom(from);
-		exchangeRate.setCurrencyTo(to);
-		exchangeRate.setRate(rate);
-		LocalDateTime dt = LocalDateTime.now().withYear(2019);
+		exchangeRate.setCurrencyFrom(currencyFrom);
+		exchangeRate.setCurrencyTo(to.getCurrencyTo());
+		exchangeRate.setRate(to.getRate());
 		exchangeRate.setDateOfTransaction(dt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+		
 		exchangeRateRepository.save(exchangeRate);
 		
 		return exchangeRate;
 	}
 	
-	public Map<String, Map<String, Double>> getHistorialRates(String from) {
+	public Map<String, Map<String, Double>> getHistoricalRates(String from) {
 	       Collection<ExchangeRate> history = exchangeRateRepository.findByCurrencyFrom(from);
 	       Map<String, Map<String, Double>> map =  history.stream().map(p-> {
 	            ExchangeRateTO to = new ExchangeRateTO();

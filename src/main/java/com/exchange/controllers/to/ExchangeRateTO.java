@@ -24,7 +24,4 @@ public class ExchangeRateTO {
 	public void setCurrencyTo(String currencyTo) {
 		this.currencyTo = currencyTo;
 	}
-	
-	
-
 }

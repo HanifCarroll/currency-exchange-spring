@@ -1,5 +1,7 @@
 package com.exchange.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.persistence.EntityNotFoundException;
@@ -28,7 +30,7 @@ public class MoneyTransactionService {
 	}
 	
 	@Transactional
-	public void addTransaction(TransactionTO to) {
+	public MoneyTransaction addTransaction(TransactionTO to) {
 		MoneyTransaction transaction = new MoneyTransaction();
 
 		Account account = accountService.findById(to.getAccountId());
@@ -36,13 +38,16 @@ public class MoneyTransactionService {
 		double amountTo = to.getAmountFrom() * rate;
 		
 		transaction.setAccount(account);
+		transaction.setRate(rate);
 		transaction.setAmountFrom(to.getAmountFrom());
 		transaction.setAmountTo(amountTo);
 		transaction.setCurrencyFrom(to.getCurrencyFrom());
 		transaction.setCurrencyTo(to.getCurrencyTo());
-		transaction.setDate("2/28/2019");
+		
+		LocalDateTime dt = LocalDateTime.now().withYear(2019);
+		transaction.setDate(dt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
-		moneyTransactionRepository.save(transaction);
+		return moneyTransactionRepository.save(transaction);
 	}
 	
 }

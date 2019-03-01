@@ -67,5 +67,20 @@ public class AccountService {
 		
 		account.addTransaction(transaction);
 	}
+
+	public void update(AccountTO to) {
+		
+		Account account = findById(to.getId());
+		
+		account.setFirstName(to.getFirstName());
+		account.setLastName(to.getLastName());
+		account.setContactEmail(to.getContactEmail());
+		account.setPayPalEmail(to.getPayPalEmail());
+		account.setDateOFBirth(to.getDateOFBirth());
+		account.setCountryOfResidence(to.getCountryOfResidence());
+		
+		accountRepository.save(account);
+		
+	}
 	
 }
