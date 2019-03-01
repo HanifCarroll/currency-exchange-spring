@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.exchange.ExchangeApplication;
+import com.exchange.controllers.to.ExchangeRateTO;
+import com.exchange.controllers.to.TransactionTO;
 import com.exchange.core.ExchangeRate;
 import com.exchange.service.ExchangeRateService;
 
@@ -32,8 +34,14 @@ public class ExchangeRateTest {
 	public void addExchangeRate() {
 		List<ExchangeRate> rates = exchangeService.getExchangeRates("USD", "YEN");
 		System.out.println(rates);
+			
+		ExchangeRateTO exchangeRate = new ExchangeRateTO();
 		
-		exchangeService.addExchangeRate("USD", "YEN", 143.12, "2019");
+		exchangeRate.setCurrencyTo("YEN");
+		exchangeRate.setRate(100);
+		exchangeRate.setYear("2018");
+		
+		exchangeService.addExchangeRate("USD", exchangeRate);
 		
 		rates = exchangeService.getExchangeRates("USD", "YEN");
 		System.out.println(rates);
